@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require("mongoose");
+const passport = require('passport');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const morgan = require('morgan'); //logger
@@ -17,6 +18,9 @@ app.use(cors());
 mongoose.connect(keys.mongoURI)
     .then(() => console.log('connected'))
     .catch(e => console.log(e))
+
+app.use(passport.initialize());
+require('./middleware/passport')(passport);
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
