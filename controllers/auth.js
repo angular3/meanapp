@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 const keys = require('../config/keys');
+const errorHandler = require('../utils/errorHandler');
 
 module.exports.login = async (req, res) => {
     const candidate = await User.findOne({ email: req.body.email });
@@ -50,7 +51,7 @@ module.exports.register = async (req, res) => {
                 message: 'User was created'
             })
         } catch (e) {
-            //TODO: handle err
+            errorHandler(res, e);
         }
 
     }
