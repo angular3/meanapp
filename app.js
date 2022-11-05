@@ -15,6 +15,8 @@ const keys = require('./config/keys')
 app.use(morgan('dev'));
 app.use(cors());
 
+app.use('/uploads', express.static('uploads'));
+
 mongoose.connect(keys.mongoURI)
     .then(() => console.log('connected'))
     .catch(e => console.log(e))
