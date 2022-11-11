@@ -13,8 +13,8 @@ export class AuthService {
 
     }
 
-    register() {
-        
+    register(user : User): Observable<User>  {
+        return this.http.post<User>('/api/auth/register', user);
     }
 
     login(user : User): Observable<{token: string}> { // we're waiting object with token, it is string so we use Observable
@@ -29,5 +29,20 @@ export class AuthService {
 
     setToken(token: string) {
         this.token = token
-    }
+    };
+
+    getToken(): string {
+        return this.token
+    };
+
+
+    isAuthenticated(): boolean {
+        return !!this.token;
+    };
+
+    logout() {
+        this.setToken('');
+        localStorage.clear();
+    };
+
 }

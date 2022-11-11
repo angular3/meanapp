@@ -44,7 +44,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.form.disable();
 
-    this.auth.login(this.form.value).subscribe( // here we have subscribe and we can have memory leak
+    this.aSub = this.auth.login(this.form.value).subscribe( // here we have subscribe and we can have memory leak
       () => this.router.navigate(['/overview']),
       error => {
         console.warn(error)
