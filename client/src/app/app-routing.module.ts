@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'; // navigation between pages
 import { LoginPageComponent } from './login-page/login-page.component';
+import { AuthGuard } from './shared/classes/auth.guard';
 import { AuthLayoutComponent } from './shared/layouts/auth-layout/auth-layout.component';
 import { SiteLayoutComponent } from './shared/layouts/site-layout/site-layout.component';
 import { SignupPageComponent } from './signup-page/signup-page.component';
@@ -29,6 +30,7 @@ const routes: Routes = [ // we created two layouts(common comps) and they will b
   {
     path: '',
     component: SiteLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
 
     ]
