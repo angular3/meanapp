@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { MaterialService } from '../shared/classes/material.service';
 import { AuthService } from '../shared/services/auth.service';
 
 
@@ -28,11 +29,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       });
     
     this.route.queryParams.subscribe((parpms: Params) => {
-      if (parpms['registeres']) {
-        // now you can log in
+      if (parpms['registered']) {
+        MaterialService.toast('Now you can log in! Hooray!');
       }
       if (parpms['accessDenied']) {
-        // you should autorizw
+        MaterialService.toast('Sorry, access denied! You need to be authenticated');
       }
     })
   }
@@ -47,6 +48,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     this.aSub = this.auth.login(this.form.value).subscribe( // here we have subscribe and we can have memory leak
       () => this.router.navigate(['/overview']),
       error => {
+        MaterialService.toast(error.error.message);
         console.warn(error)
 
         this.form.enable()
