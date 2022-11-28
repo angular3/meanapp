@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SiteLayoutComponent } from './site-layout.component';
+import { AnalyticsPageComponent } from './analytics-page.component';
 
-describe('SiteLayoutComponent', () => {
-  let component: SiteLayoutComponent;
-  let fixture: ComponentFixture<SiteLayoutComponent>;
+describe('AnalyticsPageComponent', () => {
+  let component: AnalyticsPageComponent;
+  let fixture: ComponentFixture<AnalyticsPageComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SiteLayoutComponent ]
+      declarations: [ AnalyticsPageComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SiteLayoutComponent);
+    fixture = TestBed.createComponent(AnalyticsPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

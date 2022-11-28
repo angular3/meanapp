@@ -35,6 +35,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       if (parpms['accessDenied']) {
         MaterialService.toast('Sorry, access denied! You need to be authenticated');
       }
+      if (parpms['sessionExpired']) {
+        MaterialService.toast('Sorry,your session was expired! You need to be log in again');
+      }
     })
   }
 
