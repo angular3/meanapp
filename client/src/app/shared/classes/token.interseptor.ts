@@ -15,7 +15,7 @@ export class TokenInterseptor implements HttpInterceptor {
         if (this.auth.isAuthenticated()) {
             req = req.clone({
                 setHeaders: {
-                    Aitorization: this.auth.getToken()
+                    Authorization: this.auth.getToken()
                 }
             })
         }
