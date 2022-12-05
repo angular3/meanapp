@@ -1,16 +1,23 @@
 <div class="page-title">
-    <h4>Категории</h4>
+    <h4>Categories</h4>
     <button class="waves-effect waves-light btn grey darken-1" routerLink="/categories/new">
-        Добавить категорию
+        Add category
     </button>
 </div>
 
-<div class="row" *ngIf="!loading">
+<div class="row" *ngIf="categories$ | async as categories; else loader">  <!-- here we can see that if we have data we will put it in categories, if not - we will show loader -->
     <div class="col s12">
-        <div class="collection">
-            <!-- <a *ngFor="let category of categories" href="#!" class="collection-item">{{category.name}}</a> -->
-            <div *ngIf="!loading"> lol </div>
+        <div class="collection" *ngIf="categories.length !== 0; else empty">
+           <a *ngFor="let category of categories" [routerLink]="['/categories', category._id]" class="collection-item">{{category.name}}</a>
         </div>
-        <app-loader *ngIf="loading"></app-loader>
+        
     </div>
 </div>
+
+<ng-template #loader>
+    <app-loader ></app-loader>
+</ng-template>
+
+<ng-template #empty>
+    <p class="center light">You have no categories now, please add</p>
+</ng-template>

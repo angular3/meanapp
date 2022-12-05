@@ -1,5 +1,7 @@
 import { CategoriesService } from './../shared/services/categories.service';
 import { Component, OnInit } from '@angular/core';
+import { Category } from '../shared/interfaces';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-categories-page',
@@ -8,18 +10,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoriesPageComponent implements OnInit {
 
-  loading = false;
-  categories: any = [];
+  
+  categories$: Observable<Category[]> | undefined // $ means that it us stream and it's async
 
   constructor(private categoriesService: CategoriesService) { }
 
   ngOnInit(): void {
-    this.loading = true;
-    this.categoriesService.fetch().subscribe(cat => {
-      this.loading = false;
-      this.categories = cat;
-      console.log('cat', cat)
-    })
+    this.categories$ = this.categoriesService.fetch()   //fetch returns Observable with all cats list and for request we need to use subscribe method
   }
 
 }
