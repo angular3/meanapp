@@ -10,4 +10,8 @@ export class MaterialService {
     static initializeFloatingButton(ref: ElementRef) {
         M.FloatingActionButton.init(ref.nativeElement) // with this we can have here our target el
     }
+
+    static updateTextInputs() {
+        M.updateTextInputs();
+    }
 }
