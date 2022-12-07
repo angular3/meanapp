@@ -1,3 +1,4 @@
+import { CategoriesFormComponent } from './categories-page/categories-form/categories-form.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router'; // navigation between pages
 import { AnalyticsPageComponent } from './analytics-page/analytics-page.component';
@@ -41,7 +42,9 @@ const routes: Routes = [ // we created two layouts(common comps) and they will b
       {path: 'analytics', component: AnalyticsPageComponent},
       {path: 'history', component: HistoryPageComponent},
       {path: 'order', component: OrderPageComponent},
-      {path: 'categories', component: CategoriesPageComponent}
+      {path: 'categories', component: CategoriesPageComponent},
+      {path: 'categories/new', component: CategoriesFormComponent},
+      {path: 'categories/:id', component: CategoriesFormComponent},
     ]
   }
 ];

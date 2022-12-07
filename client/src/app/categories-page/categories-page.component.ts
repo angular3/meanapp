@@ -17,6 +17,6 @@ export class CategoriesPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.categories$ = this.categoriesService.fetch()   //fetch returns Observable with all cats list and for request we need to use subscribe method
-  }
+  }// async pipe do all work for us and we don't need to unsubscribe
 
 }
