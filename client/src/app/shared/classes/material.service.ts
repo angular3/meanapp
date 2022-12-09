@@ -12,6 +12,6 @@ export class MaterialService {
     }
 
     static updateTextInputs() {
-        M.updateTextInputs();
+        M.updateTextFields();
     }
 }
