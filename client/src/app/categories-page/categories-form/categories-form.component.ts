@@ -2,7 +2,7 @@ import { Category } from './../../shared/interfaces';
 import { MaterialService } from './../../shared/classes/material.service';
 
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CategoriesService } from 'src/app/shared/services/categories.service';
 import { of, switchMap } from 'rxjs';
@@ -21,7 +21,9 @@ export class CategoriesFormComponent implements OnInit {
   form!: FormGroup;
   category!: Category;
 
-  constructor(private route: ActivatedRoute, private categoriesService: CategoriesService) { }
+  constructor(private route: ActivatedRoute,
+    private categoriesService: CategoriesService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({ name: new FormControl(null, Validators.required) });
@@ -47,7 +49,6 @@ export class CategoriesFormComponent implements OnInit {
         category => {
           if (category) {
             this.category = category;
-            console.log(category);
             
             this.form.patchValue({
               name: category.name,
@@ -74,6 +75,20 @@ export class CategoriesFormComponent implements OnInit {
     }
 
     reader.readAsDataURL(file);
+  }
+
+  deleteCategory() {
+    const decision = window.confirm(`Are you sure that you want to delete category ${this.category.name}?`);
+
+    if (decision) {
+      return this.categoriesService.delete(this.category._id!)
+        .subscribe(
+          response => MaterialService.toast(response.message),
+          error => MaterialService.toast(error.error.message),
+          () => this.router.navigate(['/categories'])
+        );
+    }
+    return;
   }
 
   onSubmit() {
