@@ -1,3 +1,4 @@
+import { OrderPosition } from './../shared/interfaces';
 import { OrderService } from './order.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
@@ -15,7 +16,7 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   modal!: MaterialInstance;
   isRoot: boolean = true;
 
-  constructor(private router: Router, private order: OrderService) { }
+  constructor(private router: Router, public order: OrderService) { }
 
   ngOnInit(): void {
     // because here we need to check all the time what exactely router is and change header every time 
@@ -35,6 +36,10 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.modal = MaterialService.initModal(this.modalRef!)
+  }
+
+  removePosition(orderPosition: OrderPosition) {
+    this.order.remove(orderPosition);
   }
 
   onOpen() {

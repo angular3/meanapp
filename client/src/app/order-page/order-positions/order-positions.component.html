@@ -1,1 +1,39 @@
-<p>order-positions works!</p>
+<div *ngIf="positions$ | async as positions; else loader"> 
+    <!-- here we define that we're waiting of stream positions and wile loading showing loader, but when positions are loaded
+    we put them in positions variable -->
+    <table class="highlight" *ngIf="positions.length !== 0; else empty">
+        <thead>
+        
+        <tr>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Amount</th>
+            <th></th>
+        </tr>
+        </thead>
+    
+        <tbody>
+        <tr *ngFor="let position of positions">
+            <td>{{position.name}}</td>
+            <td>{{position.cost}}$</td>
+            <td>
+                <div class="input-field inline order-position-input">
+                    <input placeholder="1" type="number" min="1" [(ngModel)]="position.quantity">
+                </div>
+            </td>
+            <td>
+                <button class="btn waves-effect wavers-light btn-small"
+                (click)="addToOrder(position)"
+                [disabled]="!position.quantity"
+                >Add
+                </button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <ng-template #empty class="center"> You don't have pasitions yet, please add! </ng-template>
+</div>
+
+<ng-template #loader><app-loader></app-loader></ng-template>
+
