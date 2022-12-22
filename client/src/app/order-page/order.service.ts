@@ -46,6 +46,8 @@ export class OrderService {
     }
 
     clear() {
-        
+        this.list = [],
+        this.price = 0, // here we return our order to initial state
+        () => console.log(null);
     }
 }

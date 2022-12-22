@@ -1,8 +1,10 @@
-import { OrderPosition } from './../shared/interfaces';
+import { Subscription } from 'rxjs';
+import { Order, OrderPosition } from './../shared/interfaces';
 import { OrderService } from './order.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { MaterialInstance, MaterialService } from '../shared/classes/material.service';
+import { OrdersService } from '../shared/services/orders.service';
 
 @Component({
   selector: 'app-order-page',
@@ -14,9 +16,11 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('modal') modalRef?: ElementRef
   modal!: MaterialInstance;
+  oSub?: Subscription;
   isRoot: boolean = true;
+  pending: boolean = false;
 
-  constructor(private router: Router, public order: OrderService) { }
+  constructor(private router: Router, public order: OrderService, private ordersService: OrdersService) { }
 
   ngOnInit(): void {
     // because here we need to check all the time what exactely router is and change header every time 
@@ -32,6 +36,9 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.modal.destroy?.();
+    if (this.oSub) {
+      this.oSub.unsubscribe(); // here we unsubscribe from our subscriptions on this page(comp)
+    }
   }
 
   ngAfterViewInit(): void {
@@ -51,6 +58,26 @@ export class OrderPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSubmit() {
-    this.modal.close?.();
+    this.pending = true
+    const order: Order = {
+      list: this.order.list.map(item => {
+        delete item._id ;
+        return item;
+      }),
+    }
+    this.oSub = this.ordersService.create(order).subscribe(
+      newOrder => {
+        console.log(newOrder.order);
+        
+        MaterialService.toast(`Order #${newOrder.order} has been added!`);
+        this.order.clear();
+      },
+      error => MaterialService.toast(error.error),
+      () => {
+        this.modal.close?.();
+        this.pending = false;
+      }
+    );
+   
   }
 }
