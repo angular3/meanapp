@@ -1,3 +1,6 @@
+import { Order } from './../shared/interfaces';
+import { Observable } from 'rxjs';
+import { OrdersService } from './../shared/services/orders.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -9,7 +12,10 @@ export class AnalyticsPageComponent implements OnInit {
 
   constructor() { }
 
+  orders!: Observable<Order[]>
+
   ngOnInit(): void {
+
   }
 
 }
