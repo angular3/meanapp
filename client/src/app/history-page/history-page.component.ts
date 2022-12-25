@@ -1,3 +1,4 @@
+import { Filter } from './../shared/interfaces';
 import { MaterialInstance, MaterialService } from './../shared/classes/material.service';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { OrdersService } from '../shared/services/orders.service';
@@ -18,6 +19,7 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   isFilterVisible = false;
   oSub!: Subscription;
   orders: Order[] = [];
+  filter: Filter = {};
 
   loading: boolean = false;
   reloading: boolean = false;
@@ -35,10 +37,11 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   private fetch() {
-    const params = {
+    const params = Object.assign({}, this.filter, {
       offset: this.offset,
       limit: this.limit,
-    }
+    });
+  
     this.oSub = this.ordersService.fetch(params)
       .subscribe(orders => {
         this.isLastOrders = orders.length < STEP;
@@ -61,6 +64,19 @@ export class HistoryPageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.tooltip = MaterialService.initTooltip(this.tooltipRef);
+  }
+
+  applyFilter(filter: Filter) {
+    this.orders = [];
+    this.offset = 0;
+    this.filter = filter;
+    this.reloading = true;
+
+    this.fetch();
+  }
+
+  isFiltered(): boolean {
+    return Object.keys(this.filter).length !== 0;
   }
 
 }
