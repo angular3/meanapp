@@ -14,7 +14,7 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build":  "npm run client-install && npm run build --prefix client",
-    "postbuild": "NPM_CONFIG_PRODUCTION=false npm run start && npm run start --prefix client"
+    "postbuild": "NPM_CONFIG_PRODUCTION=false npm run install && npm run start && npm run start --prefix client"
   },
   "keywords": [
     "angular"
