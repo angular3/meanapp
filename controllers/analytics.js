@@ -7,9 +7,10 @@ errorHandler
 
 module.exports.overview = async (req, res) => {
     try {
-        const allOrders = await Order.find({ user: req.user.id }).sort(1);
+        const allOrders = await Order.find({ user: req.user.id }).sort('1');
         const ordersMap = getOrdersMap(allOrders);
         const yesterdaysOrders = ordersMap[moment().add(-1, 'd').format('DD.MM.YYYY')] || []; // here we add -1 day to current one
+        console.log(+yesterdaysOrders);
         const yesterdaysOrdersCount = yesterdaysOrders.length;
 
         // count of all orders:
@@ -35,15 +36,15 @@ module.exports.overview = async (req, res) => {
 
         res.status(200).json({
             gain: {
-                precent: Math.abs(+gainPercent),
+                percent: Math.abs(+gainPercent),
                 compare: Math.abs(+compareGain),
                 yesterday: +yesterdaysGain,
                 isHigher: gainPercent > 0,
             }, 
             orders: {
-                precent: Math.abs(+ordersPercent),
+                percent: Math.abs(+ordersPercent),
                 compare: Math.abs(+compareOrdersNumbers),
-                yesterday: +yesterdaysOrders,
+                yesterday: +yesterdaysOrders.length,
                 isHigher: ordersPercent > 0,
             }
         })
@@ -53,8 +54,32 @@ module.exports.overview = async (req, res) => {
 
 }
 
-module.exports.analytics = (req, res) => {
+module.exports.analytics = async (req, res) => {
+    try {
+        const allOrders = await Order.find({ user: req.user.id }).sort('1');
+        const ordersMap = getOrdersMap(allOrders);
 
+        const average = +(calculatePrice(allOrders) / Object.keys(ordersMap).length).toFixed(2);
+
+        const chart = Object.keys(ordersMap).map(label => {
+
+            const gain = calculatePrice(ordersMap[label]);
+            const order = ordersMap[label].length;
+
+            return {
+                label,
+                order,
+                gain
+            }
+        })
+
+        res.status(200).json({
+            average,
+            chart,
+        })
+    } catch (e) {
+        errorHandler(res, e);
+    }
 }
 
 
