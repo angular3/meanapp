@@ -17,7 +17,7 @@ app.use(morgan('dev'));
 app.use(cors());
 
 app.use('/uploads', express.static('uploads'));
-
+console.log(keys.mongoURI)
 mongoose.connect(keys.mongoURI)
     .then(() => console.log('connected'))
     .catch(e => console.log(e))
