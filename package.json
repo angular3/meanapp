@@ -13,8 +13,7 @@
     "client-install": "npm install --prefix client",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build":  "npm install && cd ./client && npm i && npm run build",
-    "postbuild": "npm run start && npm run build --prefix client"
+    "build":  "npm install && cd ./client && npm i && npm run build"
   },
   "keywords": [
     "angular"
