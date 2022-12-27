@@ -1,5 +1,10 @@
 if (process.env.NODE_ENV === 'production') {
-    module.exports = require('./keys.prod.js')
+    module.exports = {
+        mongoURI: process.env.MONGO_URI,
+        jwtSecret: process.env.JWT,
+    }
 } else {
-    module.exports = require('./keys.prod.js')
+    module.exports = {
+        mongoURI: process.env.MONGO_URI,
+        jwtSecret: process.env.JWT,}
 }
