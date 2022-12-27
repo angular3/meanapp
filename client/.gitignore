@@ -7,6 +7,13 @@
 
 /etc
 
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.env
+
 # Node
 /node_modules
 npm-debug.log
