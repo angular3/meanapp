@@ -8,12 +8,12 @@
     "npm": "8.19.2"
   },
   "scripts": {
-    "start": "node index",
+    "start": "node index.js",
     "server": "nodemon index",
     "client-install": "npm install --prefix client",
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "build":  "npm install && npm run client-install",
+    "build":  "npm install && cd ./client && npm i && npm run build",
     "postbuild": "npm run start && npm run build --prefix client"
   },
   "keywords": [
