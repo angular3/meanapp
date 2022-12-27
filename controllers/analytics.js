@@ -1,5 +1,5 @@
 const moment = require('moment');
-const Order = require('../models/Order');
+const Order = require('../models/order');
 const errorHandler = require('../utils/errorHandler');
 
 
