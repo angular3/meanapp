@@ -20,6 +20,7 @@ Technical part:
     
 ## Deployed project link
 Please find deployed project here: https://mean-cafe.onrender.com
+Please use creds: email: test@test.ru / Pass: test@test.ru to see valid statistics
 
 ## Run Locally
 
